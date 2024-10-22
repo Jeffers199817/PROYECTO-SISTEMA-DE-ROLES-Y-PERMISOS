@@ -8,6 +8,15 @@ package com.mycompany.sistemaderolesypermisos.logica;
  *
  * @author JEFFERSON ALQUINGA
  */
+
+@Entity
 public class Usuario {
+    
+    
+    private int id;
+    private String nombreUsuario;
+    private String contrasenia; 
+    private Rol rol;
+    
     
 }
