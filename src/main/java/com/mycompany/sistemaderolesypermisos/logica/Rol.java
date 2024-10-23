@@ -4,23 +4,40 @@
  */
 package com.mycompany.sistemaderolesypermisos.logica;
 
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 /**
  *
  * @author JEFFERSON ALQUINGA
  */
-public class Rol {
+@Entity
+public class Rol implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String nombreRol;
+    @Basic
+    private String rol;
     private String descripcion;
+    
+    @OneToMany
+    private List<Usuario> listaUsuarios;
 
     public Rol() {
     }
 
-    public Rol(int id, String nombreRol, String descripcion) {
+    public Rol(int id, String rol, String descripcion, List<Usuario> listaUsuarios) {
         this.id = id;
-        this.nombreRol = nombreRol;
+        this.rol = rol;
         this.descripcion = descripcion;
+        this.listaUsuarios = listaUsuarios;
     }
 
     public int getId() {
@@ -31,12 +48,12 @@ public class Rol {
         this.id = id;
     }
 
-    public String getNombreRol() {
-        return nombreRol;
+    public String getRol() {
+        return rol;
     }
 
-    public void setNombreRol(String nombreRol) {
-        this.nombreRol = nombreRol;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public String getDescripcion() {
@@ -46,8 +63,14 @@ public class Rol {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
+
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
     
     
 }
