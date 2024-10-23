@@ -5,16 +5,18 @@
 package com.mycompany.sistemaderolesypermisos.persistencia;
 
 import com.mycompany.sistemaderolesypermisos.logica.Rol;
-import com.mycompany.sistemaderolesypermisos.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import com.mycompany.sistemaderolesypermisos.persistencia.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  *
@@ -26,8 +28,7 @@ public class RolJpaController implements Serializable {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
-        
-    public RolJpaController(){
+      public RolJpaController(){
         emf = Persistence.createEntityManagerFactory("SistemaPU");
     }
     public EntityManager getEntityManager() {
@@ -35,11 +36,29 @@ public class RolJpaController implements Serializable {
     }
 
     public void create(Rol rol) {
+        if (rol.getListaUsuarios() == null) {
+            rol.setListaUsuarios(new ArrayList<Usuario>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Usuario> attachedListaUsuarios = new ArrayList<Usuario>();
+            for (Usuario listaUsuariosUsuarioToAttach : rol.getListaUsuarios()) {
+                listaUsuariosUsuarioToAttach = em.getReference(listaUsuariosUsuarioToAttach.getClass(), listaUsuariosUsuarioToAttach.getId());
+                attachedListaUsuarios.add(listaUsuariosUsuarioToAttach);
+            }
+            rol.setListaUsuarios(attachedListaUsuarios);
             em.persist(rol);
+            for (Usuario listaUsuariosUsuario : rol.getListaUsuarios()) {
+                Rol oldUnRolOfListaUsuariosUsuario = listaUsuariosUsuario.getUnRol();
+                listaUsuariosUsuario.setUnRol(rol);
+                listaUsuariosUsuario = em.merge(listaUsuariosUsuario);
+                if (oldUnRolOfListaUsuariosUsuario != null) {
+                    oldUnRolOfListaUsuariosUsuario.getListaUsuarios().remove(listaUsuariosUsuario);
+                    oldUnRolOfListaUsuariosUsuario = em.merge(oldUnRolOfListaUsuariosUsuario);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -53,7 +72,34 @@ public class RolJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Rol persistentRol = em.find(Rol.class, rol.getId());
+            List<Usuario> listaUsuariosOld = persistentRol.getListaUsuarios();
+            List<Usuario> listaUsuariosNew = rol.getListaUsuarios();
+            List<Usuario> attachedListaUsuariosNew = new ArrayList<Usuario>();
+            for (Usuario listaUsuariosNewUsuarioToAttach : listaUsuariosNew) {
+                listaUsuariosNewUsuarioToAttach = em.getReference(listaUsuariosNewUsuarioToAttach.getClass(), listaUsuariosNewUsuarioToAttach.getId());
+                attachedListaUsuariosNew.add(listaUsuariosNewUsuarioToAttach);
+            }
+            listaUsuariosNew = attachedListaUsuariosNew;
+            rol.setListaUsuarios(listaUsuariosNew);
             rol = em.merge(rol);
+            for (Usuario listaUsuariosOldUsuario : listaUsuariosOld) {
+                if (!listaUsuariosNew.contains(listaUsuariosOldUsuario)) {
+                    listaUsuariosOldUsuario.setUnRol(null);
+                    listaUsuariosOldUsuario = em.merge(listaUsuariosOldUsuario);
+                }
+            }
+            for (Usuario listaUsuariosNewUsuario : listaUsuariosNew) {
+                if (!listaUsuariosOld.contains(listaUsuariosNewUsuario)) {
+                    Rol oldUnRolOfListaUsuariosNewUsuario = listaUsuariosNewUsuario.getUnRol();
+                    listaUsuariosNewUsuario.setUnRol(rol);
+                    listaUsuariosNewUsuario = em.merge(listaUsuariosNewUsuario);
+                    if (oldUnRolOfListaUsuariosNewUsuario != null && !oldUnRolOfListaUsuariosNewUsuario.equals(rol)) {
+                        oldUnRolOfListaUsuariosNewUsuario.getListaUsuarios().remove(listaUsuariosNewUsuario);
+                        oldUnRolOfListaUsuariosNewUsuario = em.merge(oldUnRolOfListaUsuariosNewUsuario);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -82,6 +128,11 @@ public class RolJpaController implements Serializable {
                 rol.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The rol with id " + id + " no longer exists.", enfe);
+            }
+            List<Usuario> listaUsuarios = rol.getListaUsuarios();
+            for (Usuario listaUsuariosUsuario : listaUsuarios) {
+                listaUsuariosUsuario.setUnRol(null);
+                listaUsuariosUsuario = em.merge(listaUsuariosUsuario);
             }
             em.remove(rol);
             em.getTransaction().commit();

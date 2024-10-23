@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,50 +28,54 @@ public class Usuario implements Serializable {
     @Basic
     private String nombreUsuario;
     private String contrasenia; 
-    @OneToOne
-    private Rol rol;
-  
-
+    @ManyToOne
+    @JoinColumn(name="fk_rol")
+    private Rol unRol;
+    
     public Usuario() {
     }
 
-    public Usuario(int id, String nombreUsuario, String contrasenia) {
+
+    public Usuario(int id, String nombreUsuario, String contrasenia, Rol unRol) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.contrasenia = contrasenia;
-     
+        this.unRol = unRol;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
+  
 
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombreUsuario() {
         return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getContrasenia() {
         return contrasenia;
     }
 
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
 
+    public Rol getUnRol() {
+        return unRol;
+    }
 
-
-   
+    public void setUnRol(Rol unRol) {
+        this.unRol = unRol;
+    }
     
     
 
