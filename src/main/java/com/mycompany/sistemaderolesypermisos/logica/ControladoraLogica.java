@@ -21,10 +21,11 @@ public class ControladoraLogica {
         
     }
 
-    public String validarUsuario(String nombreUsuario, String contrasenia) {
+    public Usuario validarUsuario(String nombreUsuario, String contrasenia) {
         
         
-        String mensaje = "";
+        //String mensaje = "";
+        Usuario  usr = null;
         
         List<Usuario> listaUsuario = controlPersis.validarUsuario();
         
@@ -34,21 +35,24 @@ public class ControladoraLogica {
                 
                 if(usu.getContrasenia().equals(contrasenia)){
                     
-                    mensaje = "Inicio de sesión exitoso" +  "Bienvenido " + usu.getNombreUsuario();
-                    return mensaje;
+      
+                    
+                    return usr = usu ;
                 }else{ 
-                   return mensaje = "Usuario o Contraseña incorrectos.";
+                   return  usr = null;
                 }
                         
                         
                 
             }else{
-                mensaje = "Usuario no existe";
+                usr = null;
             }
             
         }
-        return mensaje;
+        return usr = null;
     }
+
+
     
     
 }

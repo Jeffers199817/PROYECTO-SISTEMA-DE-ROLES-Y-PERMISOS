@@ -5,6 +5,7 @@
 package com.mycompany.sistemaderolesypermisos.igu;
 
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
+import com.mycompany.sistemaderolesypermisos.logica.Usuario;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -186,11 +187,41 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
 
               String nombreUsuario= txtNombreUsuario.getText();
               String contrasenia = txtContrasenia.getText();
-                 String mensaje1 = controlL.validarUsuario(nombreUsuario, contrasenia);
+   
               
               if(!nombreUsuario.equals("") && !contrasenia.equals("")){
-                String mensaje = controlL.validarUsuario(nombreUsuario, contrasenia);
-                   tablaMensaje("Bienvenido","info","Ingreso Exitoso");   
+                Usuario usr = controlL.validarUsuario(nombreUsuario, contrasenia);
+                    if(usr != null){ 
+                        
+                        String rol = usr.getUnRol().getRol();
+                        if(rol.equals("admin")){
+                            
+                            PrincipalAdmin pAdmin = new PrincipalAdmin(controlL,usr);
+                            pAdmin.setVisible(true);
+                            pAdmin.setLocationRelativeTo(null);
+                            
+                            this.dispose();
+                                 
+                            
+                        }
+                        
+                        if(rol.equals("user")){ 
+                            
+                            PrincipalUser pUser = new PrincipalUser(controlL,usr);
+                            
+                            pUser.setVisible(true);
+                            pUser.setLocationRelativeTo(null);
+                            this.dispose();
+                            
+                            
+                            
+                        }
+                        tablaMensaje("Bienvenido: " + usr.getNombreUsuario() ,"info","Ingreso Exitoso");   
+                        
+                    }else{
+                        tablaMensaje("Usuario no Existe","error","Usuario no encontrado");   
+                    }
+                   
                   
               } else{
                    
