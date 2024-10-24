@@ -5,6 +5,7 @@
 package com.mycompany.sistemaderolesypermisos.igu;
 
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
+import static com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica.EMAIL_CONTRASENIA_INCORRECTA;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -191,7 +192,7 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
               
               if(!nombreUsuario.equals("") && !contrasenia.equals("")){
                 Usuario usr = controlL.validarUsuario(nombreUsuario, contrasenia);
-                    if(usr != null){ 
+                    if(usr != null && usr != EMAIL_CONTRASENIA_INCORRECTA){ 
                         
                         String rol = usr.getUnRol().getRol();
                         if(rol.equals("admin")){
@@ -219,7 +220,14 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
                         tablaMensaje("Bienvenido: " + usr.getNombreUsuario() ,"info","Ingreso Exitoso");   
                         
                     }else{
-                        tablaMensaje("Usuario no Existe","error","Usuario no encontrado");   
+                        
+                        if(usr == EMAIL_CONTRASENIA_INCORRECTA){ 
+                            tablaMensaje("Usuario o Contraseña Incorrecta","error","Usuario o Contraseña Incorrecta"); 
+                            
+                        }else{ 
+                             tablaMensaje("Usuario no Existe","info","Usuario no encontrado");   
+                        }
+                       
                     }
                    
                   

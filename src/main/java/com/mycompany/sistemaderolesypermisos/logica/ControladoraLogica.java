@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class ControladoraLogica {
     ControladoraPersistencia controlPersis = null;
+    public static final Usuario EMAIL_CONTRASENIA_INCORRECTA = new Usuario();
     
     public ControladoraLogica(){ 
         
@@ -22,6 +23,9 @@ public class ControladoraLogica {
     }
 
     public Usuario validarUsuario(String nombreUsuario, String contrasenia) {
+        
+        
+        //CREAR UN OBJETO ESPECIAL
         
         
         //String mensaje = "";
@@ -39,7 +43,7 @@ public class ControladoraLogica {
                     
                     return usr = usu ;
                 }else{ 
-                   return  usr = null;
+                   return  usr = EMAIL_CONTRASENIA_INCORRECTA;
                 }
                         
                         
