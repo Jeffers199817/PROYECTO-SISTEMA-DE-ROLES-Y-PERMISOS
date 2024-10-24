@@ -194,7 +194,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
     private void btnRecargarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaActionPerformed
      
-    cargarTabla1();
+   this.cargarTabla1();
 // TODO add your handling code here:
     }//GEN-LAST:event_btnRecargarTablaActionPerformed
 
@@ -238,7 +238,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 
                 for(Usuario usu: listaUsuariosAdmin){ 
                     
-                    Object objeto[]= { usu.getId(), usu.getNombreUsuario(), usu.getContrasenia(), usu.getUnRol().getRol(), usu.getUnRol().getDescripcion() };
+                    Object objeto[]= { usu.getId(), usu.getNombreUsuario(), usu.getUnRol().getRol(), usu.getUnRol().getDescripcion() };
                 
                     
                     modeloTabla.addRow(objeto);
