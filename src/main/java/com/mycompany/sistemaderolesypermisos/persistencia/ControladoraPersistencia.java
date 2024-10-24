@@ -4,6 +4,7 @@
  */
 package com.mycompany.sistemaderolesypermisos.persistencia;
 
+import com.mycompany.sistemaderolesypermisos.logica.Rol;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
 import java.util.List;
 
@@ -26,6 +27,17 @@ public class ControladoraPersistencia {
        return usuJpa.findUsuarioEntities();
        
        
+    }
+
+    public List<Rol> traerRoles() {
+        
+        return rolJpa.findRolEntities();
+        
+    }
+
+    public void guardarUsuario(Usuario usr) {
+        
+        usuJpa.create(usr);
     }
     
     

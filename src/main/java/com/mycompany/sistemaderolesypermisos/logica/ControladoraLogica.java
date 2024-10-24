@@ -14,7 +14,8 @@ import java.util.List;
 public class ControladoraLogica {
     ControladoraPersistencia controlPersis = null;
     public static final Usuario EMAIL_CONTRASENIA_INCORRECTA = new Usuario();
-    
+    Usuario usr = new Usuario();
+    Rol rol1 = new Rol();
     public ControladoraLogica(){ 
         
      controlPersis= new ControladoraPersistencia();
@@ -64,7 +65,51 @@ public class ControladoraLogica {
         return controlPersis.traerUsuarios();
     }
 
+    public void guardarUsuario(String nombreUsuario, String contrasenia, int rol) {
+        Usuario usr1 = new Usuario();
+        usr1.setNombreUsuario(nombreUsuario);
+        usr1.setContrasenia(contrasenia);
+        
+        
+        List<Rol> listaRol = traerRoles();
+       
+        for(Rol roles: listaRol){ 
+            
+            System.out.println("rol: " + roles.getRol()+ roles.getId());
+            
+            
+        if(roles.getId() == 1 && rol==1){ 
+            
+            
+            usr1.setUnRol(roles);
+           controlPersis.guardarUsuario(usr1);
+           break;
+  
+            
+        }
+        if(roles.getId() == 2 && rol ==2){ 
+            
+            usr1.setUnRol(roles);
+            
+            controlPersis.guardarUsuario(usr1);
+            break;
+            
+            
+        }
+        
+        
+      
+            
+            
+        }
+        
+      
+    }
 
-    
+
+    public List<Rol> traerRoles(){ 
+        
+        return controlPersis.traerRoles();
+    }
     
 }

@@ -76,6 +76,10 @@ public class Usuario implements Serializable {
     public void setUnRol(Rol unRol) {
         this.unRol = unRol;
     }
+
+    void traerRol() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
 

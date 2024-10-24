@@ -4,16 +4,29 @@
  */
 package com.mycompany.sistemaderolesypermisos.igu;
 
+import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
+import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author JEFFERSON ALQUINGA
  */
 public class AltaUsuario extends javax.swing.JFrame {
 
+        ControladoraLogica controlL;
+        Usuario usr= new Usuario();
+        
+       
+        
+        
     /**
      * Creates new form AltaUsuario
      */
-    public AltaUsuario() {
+    public AltaUsuario(ControladoraLogica controlL) {
+        this.controlL = controlL;
+       
         initComponents();
     }
 
@@ -46,6 +59,11 @@ public class AltaUsuario extends javax.swing.JFrame {
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         btnLimpiar.setText("LIMPIAR");
@@ -103,7 +121,7 @@ public class AltaUsuario extends javax.swing.JFrame {
         txtNombreUsuario.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
 
         cmbRol.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "admin\t", "user" }));
+        cmbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "admin", "user" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -193,14 +211,50 @@ public class AltaUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtContraseniaActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-
-
-
-
+            //Eliminar o vaciar los txt el contenido. 
             txtContrasenia.setText("");
             txtNombreUsuario.setText("");
+            cmbRol.setSelectedIndex(0);
 // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+            
+        
+        String nombreUsuario = txtNombreUsuario.getText();
+        String contrasenia = txtContrasenia.getText();
+        int    rol =  cmbRol.getSelectedIndex();
+        
+        if(!nombreUsuario.equals("") && !contrasenia.equals("") && rol!=0){
+            controlL.guardarUsuario(nombreUsuario, contrasenia, rol);
+            tablaMensaje("Usuario Creado Exitosamente", "info", "Registro Exitoso");
+            
+            this.dispose();
+            
+            PrincipalAdmin pAdmin = new PrincipalAdmin(controlL, usr);
+            pAdmin.setVisible(true);
+            pAdmin.setLocationRelativeTo(null);
+            
+            
+        
+             
+        
+        }else{ 
+            
+            tablaMensaje("Todos los campos son obligatorios", "info", "Campos Obligatorios");
+            
+           
+        }
+        
+        
+        
+        
+        
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -217,4 +271,25 @@ public class AltaUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtContrasenia;
     private javax.swing.JTextField txtNombreUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void tablaMensaje(String mensajeT, String Tipo, String mensajeAlvertencia) {
+                
+        JOptionPane optionPane = new JOptionPane(mensajeT);
+                
+                if( Tipo.equals("info")){ 
+                    
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(Tipo.equals("error")){ 
+                     optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+                }
+              
+               
+               JDialog dialog = optionPane.createDialog(mensajeAlvertencia);
+               dialog.setAlwaysOnTop(true);
+               dialog.setVisible(true);
+    
+    }
+
+
 }

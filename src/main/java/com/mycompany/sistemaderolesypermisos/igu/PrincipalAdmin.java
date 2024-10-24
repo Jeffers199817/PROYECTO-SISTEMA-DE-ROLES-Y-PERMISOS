@@ -76,6 +76,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnCrearUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnCrearUsuario.setText("Crear Nuevo Usuario");
+        btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearUsuarioActionPerformed(evt);
+            }
+        });
 
         btnRecargarTabla.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnRecargarTabla.setText("Recargar Tabla");
@@ -198,6 +203,22 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_btnRecargarTablaActionPerformed
 
+    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
+                
+        
+        AltaUsuario altaUsu = new AltaUsuario(controlL);
+        
+            altaUsu.setVisible(true);
+            altaUsu.setLocationRelativeTo(null);
+            this.dispose();
+
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCrearUsuarioActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -252,4 +273,6 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         
         tbUsuarios.setModel(modeloTabla);
     }
+    
+    
 }
