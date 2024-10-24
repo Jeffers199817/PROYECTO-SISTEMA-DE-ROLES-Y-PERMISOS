@@ -6,6 +6,8 @@ package com.mycompany.sistemaderolesypermisos.igu;
 
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -77,10 +79,20 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnRecargarTabla.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnRecargarTabla.setText("Recargar Tabla");
+        btnRecargarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablaActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setToolTipText("");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnBorrarUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnBorrarUsuario.setText("Borrar Usuario");
@@ -168,7 +180,23 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
        
                  this.txtNombreAdmin.setText(usr.getNombreUsuario());
+                 
+                 
+                 cargarTabla1();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+
+
+
+    this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRecargarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaActionPerformed
+     
+    cargarTabla1();
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnRecargarTablaActionPerformed
 
 
 
@@ -185,4 +213,43 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tbUsuarios;
     private javax.swing.JTextField txtNombreAdmin;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla1() {
+        
+        
+       //1.- Crear el Modelo
+        DefaultTableModel modeloTabla = new DefaultTableModel(){ 
+            
+            public boolean isCeliEditable(int row, int column){ 
+                return false;
+            }
+        };
+        
+        //2.- Crear los titulos 
+        
+            String titulos[] = {"Id","Usuario", "Rol","Descripción de rol" } ;
+            
+            modeloTabla.setColumnIdentifiers(titulos);
+            
+            
+            List<Usuario> listaUsuariosAdmin = controlL.traerUsuario();
+            
+            if( listaUsuariosAdmin != null){ 
+                
+                for(Usuario usu: listaUsuariosAdmin){ 
+                    
+                    Object objeto[]= { usu.getId(), usu.getNombreUsuario(), usu.getContrasenia(), usu.getUnRol().getRol(), usu.getUnRol().getDescripcion() };
+                
+                    
+                    modeloTabla.addRow(objeto);
+                }
+                
+                
+            }
+        
+            
+        //3.- Asignar el modelo a la tabla 
+        
+        tbUsuarios.setModel(modeloTabla);
+    }
 }

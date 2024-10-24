@@ -6,6 +6,8 @@ package com.mycompany.sistemaderolesypermisos.igu;
 
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -38,7 +40,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbUsuario = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         btnSali = new javax.swing.JButton();
         btnRecargarTb = new javax.swing.JButton();
@@ -54,7 +56,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setText("Sistema Administrador de Usuarios");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -65,13 +67,23 @@ public class PrincipalUser extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbUsuario);
 
         btnSali.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnSali.setText("Salir");
+        btnSali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaliActionPerformed(evt);
+            }
+        });
 
         btnRecargarTb.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnRecargarTb.setText("Recargar Tabla");
+        btnRecargarTb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTbActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -143,12 +155,23 @@ public class PrincipalUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-
    
-                 this.txtNombreUsuario.setText(usr.getNombreUsuario());
+        //CARGAR EL NOMBRE DE USUARIO 
+        this.txtNombreUsuario.setText(usr.getNombreUsuario());
+        cargarTabla();
+    
 
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnSaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaliActionPerformed
+    this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaliActionPerformed
+
+    private void btnRecargarTbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTbActionPerformed
+
+
+    cargarTabla();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRecargarTbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,19 +179,61 @@ public class PrincipalUser extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBorrarUsuario;
-    private javax.swing.JButton btnCrearUsuario;
-    private javax.swing.JButton btnEditarUsuario;
-    private javax.swing.JButton btnRecargarTabla;
     private javax.swing.JButton btnRecargarTb;
     private javax.swing.JButton btnSali;
-    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbUsuario;
     private javax.swing.JTextField txtNombreUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla() {
+        
+        
+       //1.- //Deifinir el modello que queremos que tega la tabla 
+        
+        DefaultTableModel modeloTabla = new DefaultTableModel(){
+            
+            //Método que me permite poner que las filas y columnas no sean editables;                        
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        
+        //2.-//Establecemos el nombre de la columna  
+        
+        String titulos[] = {"Id","Usuario","Rol","Descripción"};
+        modeloTabla.setColumnIdentifiers(titulos);
+        
+       
+        //2.1 Listar todos los usuarios de la bd la lista de usuarios
+        
+        
+        List<Usuario> listaUsuarios = controlL.traerUsuario();
+        
+        
+        if(listaUsuarios != null){ 
+                    
+        for(Usuario usr : listaUsuarios){ 
+             Object objeto[] ={ usr.getId() , usr.getNombreUsuario(), usr.getUnRol().getRol(), usr.getUnRol().getDescripcion()
+                 
+             } ;
+             System.out.println("Id: "+ usr.getId() +"  Usuario: "+ usr.getNombreUsuario()+ "  Rol: " + usr.getUnRol().getRol()+ " Descripción de Rol: " + usr.getUnRol().getDescripcion());
+          
+             modeloTabla.addRow(objeto);
+        }
+         
+        }
+
+       
+        //3.-//Asiganamos el modelo a nuestra tabla 
+        
+        tbUsuario.setModel(modeloTabla);
+        
+        
+        
+    }
 }

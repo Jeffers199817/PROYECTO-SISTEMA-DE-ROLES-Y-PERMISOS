@@ -20,6 +20,13 @@ public class ControladoraPersistencia {
         
         return usuJpa.findUsuarioEntities();
     }
+
+    public List<Usuario> traerUsuarios() {
+        
+       return usuJpa.findUsuarioEntities();
+       
+       
+    }
     
     
     
