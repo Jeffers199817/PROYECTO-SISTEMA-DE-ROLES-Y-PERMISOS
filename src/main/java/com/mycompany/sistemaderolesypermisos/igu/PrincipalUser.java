@@ -158,7 +158,7 @@ public class PrincipalUser extends javax.swing.JFrame {
    
         //CARGAR EL NOMBRE DE USUARIO 
         this.txtNombreUsuario.setText(usr.getNombreUsuario());
-        cargarTabla();
+        this.cargarTabla();
     
 
     }//GEN-LAST:event_formWindowOpened

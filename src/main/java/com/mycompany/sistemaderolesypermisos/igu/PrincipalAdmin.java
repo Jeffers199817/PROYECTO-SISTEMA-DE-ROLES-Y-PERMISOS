@@ -187,7 +187,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                  this.txtNombreAdmin.setText(usr.getNombreUsuario());
                  
                  
-                 cargarTabla1();
+                 this.cargarTabla1();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -198,8 +198,9 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRecargarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaActionPerformed
-     
-   this.cargarTabla1();
+
+        
+                    cargarTabla1();
 // TODO add your handling code here:
     }//GEN-LAST:event_btnRecargarTablaActionPerformed
 
@@ -261,7 +262,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                     
                     Object objeto[]= { usu.getId(), usu.getNombreUsuario(), usu.getUnRol().getRol(), usu.getUnRol().getDescripcion() };
                 
-                    
+                    System.out.println("Id: "+ usr.getId() +"  Usuario: "+ usr.getNombreUsuario()+ "  Rol: " + usr.getUnRol().getRol()+ " Descripción de Rol: " + usr.getUnRol().getDescripcion());
                     modeloTabla.addRow(objeto);
                 }
                 
