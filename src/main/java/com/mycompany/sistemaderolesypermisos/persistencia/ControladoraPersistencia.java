@@ -6,7 +6,10 @@ package com.mycompany.sistemaderolesypermisos.persistencia;
 
 import com.mycompany.sistemaderolesypermisos.logica.Rol;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import com.mycompany.sistemaderolesypermisos.persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,6 +41,16 @@ public class ControladoraPersistencia {
     public void guardarUsuario(Usuario usr) {
         
         usuJpa.create(usr);
+    }
+
+    public void eliminarUsuario(int num_usuario) {
+        
+        try {
+            usuJpa.destroy(num_usuario);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     

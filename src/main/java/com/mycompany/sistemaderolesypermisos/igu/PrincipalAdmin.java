@@ -7,6 +7,8 @@ package com.mycompany.sistemaderolesypermisos.igu;
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -101,6 +103,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnBorrarUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnBorrarUsuario.setText("Borrar Usuario");
+        btnBorrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarUsuarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -220,6 +227,29 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
+    private void btnBorrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarUsuarioActionPerformed
+
+ if(tbUsuarios.getRowCount()>0){
+            
+            if(tbUsuarios.getSelectedRow()!=-1){
+                
+                int num_usuario = Integer.parseInt(String.valueOf(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(),0)));
+                controlL.eliminarUsuario(num_usuario);
+                
+                tablaMensaje("Eliminado correctamente","info", "Eliminado exitoso");
+                        
+            }else{
+                tablaMensaje("Selecciona un  usuario para eliminar", "info","Seleccionar cliente");
+            }
+            
+        }else{  
+            tablaMensaje("Tabla vacia, no existen registros para eliminar","error", "Tabla vacia");
+        }
+            
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBorrarUsuarioActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -275,5 +305,22 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         tbUsuarios.setModel(modeloTabla);
     }
     
+        private void tablaMensaje(String mensajeT, String Tipo, String mensajeAlvertencia) {
+                
+        JOptionPane optionPane = new JOptionPane(mensajeT);
+                
+                if( Tipo.equals("info")){ 
+                    
+                    optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                }
+                if(Tipo.equals("error")){ 
+                     optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+                }
+              
+               
+               JDialog dialog = optionPane.createDialog(mensajeAlvertencia);
+               dialog.setAlwaysOnTop(true);
+               dialog.setVisible(true);
     
+    }
 }

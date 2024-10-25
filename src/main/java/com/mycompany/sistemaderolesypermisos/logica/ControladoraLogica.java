@@ -111,5 +111,11 @@ public class ControladoraLogica {
         
         return controlPersis.traerRoles();
     }
+
+    public void eliminarUsuario(int num_usuario) {
+        
+        controlPersis.eliminarUsuario(num_usuario);
+        
+    }
     
 }
