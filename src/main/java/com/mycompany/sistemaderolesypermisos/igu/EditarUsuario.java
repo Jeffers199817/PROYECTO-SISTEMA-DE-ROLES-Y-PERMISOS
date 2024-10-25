@@ -6,6 +6,7 @@ package com.mycompany.sistemaderolesypermisos.igu;
 
 import com.mycompany.sistemaderolesypermisos.logica.ControladoraLogica;
 import com.mycompany.sistemaderolesypermisos.logica.Usuario;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -16,18 +17,26 @@ import javax.swing.JOptionPane;
 public class EditarUsuario extends javax.swing.JFrame {
 
         ControladoraLogica controlL;
-        Usuario usr= new Usuario();
-        
+       
+        int numUsuario;
+        Usuario usu;
        
         
         
     /**
      * Creates new form AltaUsuario
      */
-    public EditarUsuario(ControladoraLogica controlL) {
+    public EditarUsuario(ControladoraLogica controlL, int numUsuario, Usuario usu) {
         this.controlL = controlL;
+        this.numUsuario = numUsuario;
+        this.usu = usu;
+        
+        
+       
+        
        
         initComponents();
+        cargarDatos(numUsuario);
     }
 
     /**
@@ -53,12 +62,17 @@ public class EditarUsuario extends javax.swing.JFrame {
         cmbRol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel1.setText("ALTA DE USUARIOS");
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        btnGuardar.setText("GUARDAR");
+        btnGuardar.setText("EDITAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -220,18 +234,19 @@ public class EditarUsuario extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
             
-        
+        int numUsu = numUsuario;
         String nombreUsuario = txtNombreUsuario.getText();
         String contrasenia = txtContrasenia.getText();
         int    rol =  cmbRol.getSelectedIndex();
         
         if(!nombreUsuario.equals("") && !contrasenia.equals("") && rol!=0){
-            controlL.guardarUsuario(nombreUsuario, contrasenia, rol);
-            tablaMensaje("Usuario Creado Exitosamente", "info", "Registro Exitoso");
+            System.out.println("llegue aqui al metodo editarUsuario ");
+            controlL.editarUsuario(numUsu, nombreUsuario, contrasenia, rol);
+            tablaMensaje("Usuario Editado Exitosamente", "info", "Registro Exitoso");
             
             this.dispose();
             
-            PrincipalAdmin pAdmin = new PrincipalAdmin(controlL, usr);
+            PrincipalAdmin pAdmin = new PrincipalAdmin(controlL, usu);
             pAdmin.setVisible(true);
             pAdmin.setLocationRelativeTo(null);
             
@@ -255,6 +270,14 @@ public class EditarUsuario extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+
+     
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -289,6 +312,25 @@ public class EditarUsuario extends javax.swing.JFrame {
                dialog.setAlwaysOnTop(true);
                dialog.setVisible(true);
     
+    }
+
+    private void cargarDatos(int numUsuario) {
+        
+        
+               List<Usuario> listaUsuario = controlL.traerUsuario();
+            
+            for(Usuario usu: listaUsuario){ 
+                
+                if(numUsuario == usu.getId()){ 
+                    System.out.println(usu.getNombreUsuario() + " " + usu.getUnRol().getRol());
+                    txtNombreUsuario.setText(usu.getNombreUsuario());
+                    txtContrasenia.setText(usu.getContrasenia());
+                    cmbRol.setSelectedIndex(usu.getUnRol().getId());
+                    
+                    System.out.println(usu.getNombreUsuario() + " " + usu.getUnRol().getRol());
+                }
+            }
+        
     }
 
 

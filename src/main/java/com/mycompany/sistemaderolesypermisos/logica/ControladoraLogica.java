@@ -70,7 +70,7 @@ public class ControladoraLogica {
         usr1.setNombreUsuario(nombreUsuario);
         usr1.setContrasenia(contrasenia);
         
-        
+       
         List<Rol> listaRol = traerRoles();
        
         for(Rol roles: listaRol){ 
@@ -93,14 +93,10 @@ public class ControladoraLogica {
             
             controlPersis.guardarUsuario(usr1);
             break;
-            
+   
             
         }
-        
-        
-      
-            
-            
+   
         }
         
       
@@ -117,5 +113,41 @@ public class ControladoraLogica {
         controlPersis.eliminarUsuario(num_usuario);
         
     }
-    
+
+    public void editarUsuario(int numUsuario, String nombreUsuario, String contrasenia, int rol) {
+        
+        
+        List<Usuario> listaUsuarios = controlPersis.traerUsuarios();
+        List<Rol> listaRoles1 = controlPersis.traerRoles();
+        
+       for(Usuario usu : listaUsuarios){ 
+           
+           if(usu.getId() == numUsuario){ 
+               usu.setNombreUsuario(nombreUsuario);
+               usu.setContrasenia(contrasenia);
+               
+               for(Rol rol1 : listaRoles1){ 
+                   
+                   if(rol1.getId() ==1 && rol==1){
+                       
+                       usu.setUnRol(rol1);
+                   }
+                   if(rol1.getId() == 2 && rol == 2){ 
+                       
+                    usu.setUnRol(rol1);
+                   }
+                   
+               }
+              
+               
+               System.out.println("Si termine de editar");
+           }
+           
+           controlPersis.editarUsuario(usu);
+       }
+        
+        
+    }
+
+
 }

@@ -25,6 +25,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         this.usr = usr;
         this.controlL = controlL;
         initComponents();
+        cargarTabla1();
         
     
     }
@@ -75,6 +76,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         btnEditarUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnEditarUsuario.setText("Editar Usuario");
+        btnEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarUsuarioActionPerformed(evt);
+            }
+        });
 
         btnCrearUsuario.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnCrearUsuario.setText("Crear Nuevo Usuario");
@@ -246,9 +252,46 @@ public class PrincipalAdmin extends javax.swing.JFrame {
             tablaMensaje("Tabla vacia, no existen registros para eliminar","error", "Tabla vacia");
         }
             
+ 
+        cargarTabla1();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBorrarUsuarioActionPerformed
+
+    private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
+
+         if(tbUsuarios.getRowCount()>0){
+            
+            if(tbUsuarios.getSelectedRow()!=-1){
+                
+                int num_usuario = Integer.parseInt(String.valueOf(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(),0)));
+                
+                System.out.println("Estoy aqui ");
+                EditarUsuario editarUsu = new EditarUsuario(controlL, num_usuario, usr);
+                editarUsu.setVisible(true);
+                editarUsu.setLocationRelativeTo(null);
+                this.dispose();
+                System.out.println("Me fui");
+                
+                
+                
+                
+                        
+            }else{
+                tablaMensaje("Selecciona un  usuario para editar", "info","Seleccionar cliente");
+            }
+            
+        }else{  
+            tablaMensaje("Tabla vacia, no existen registros para editar","error", "Tabla vacia");
+        }
+            
+ 
+        cargarTabla1();
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarUsuarioActionPerformed
 
 
 
@@ -290,9 +333,10 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                 
                 for(Usuario usu: listaUsuariosAdmin){ 
                     
+                    System.out.println("Id: "+ usr.getId() +"  Usuario: "+ usr.getNombreUsuario()+ "  Rol: " + usr.getUnRol().getRol()+ " Descripción de Rol: " + usr.getUnRol().getDescripcion());
                     Object objeto[]= { usu.getId(), usu.getNombreUsuario(), usu.getUnRol().getRol(), usu.getUnRol().getDescripcion() };
                 
-                    System.out.println("Id: "+ usr.getId() +"  Usuario: "+ usr.getNombreUsuario()+ "  Rol: " + usr.getUnRol().getRol()+ " Descripción de Rol: " + usr.getUnRol().getDescripcion());
+                   
                     modeloTabla.addRow(objeto);
                 }
                 
