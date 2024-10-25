@@ -227,7 +227,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         }
          
         }
-
+System.out.println("Final del proyecto");
        
         //3.-//Asiganamos el modelo a nuestra tabla 
         

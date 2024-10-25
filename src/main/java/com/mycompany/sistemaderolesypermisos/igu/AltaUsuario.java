@@ -245,7 +245,7 @@ public class AltaUsuario extends javax.swing.JFrame {
             
            
         }
-        
+        System.out.println("Final del proyecto");
         
         
         

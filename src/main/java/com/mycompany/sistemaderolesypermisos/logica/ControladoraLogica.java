@@ -139,7 +139,7 @@ public class ControladoraLogica {
                    
                }
               
-               
+               System.out.println("Final del proyecto");
                System.out.println("Si termine de editar");
            }
            
