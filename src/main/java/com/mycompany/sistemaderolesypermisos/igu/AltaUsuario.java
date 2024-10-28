@@ -246,6 +246,8 @@ public class AltaUsuario extends javax.swing.JFrame {
            
         }
         System.out.println("Final del proyecto");
+        System.out.println(" Final del proyecto de concecinario de inicio de seción de login usuario y admin "
+                + "");
         
         
         
