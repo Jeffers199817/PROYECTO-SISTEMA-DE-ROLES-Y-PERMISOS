@@ -252,8 +252,7 @@ public class EditarUsuario extends javax.swing.JFrame {
             
             
         
-             
-        
+             System.out.println("Final del proyecto de login y inicio de sesión de usuarioso.");
         }else{ 
             
             tablaMensaje("Todos los campos son obligatorios", "info", "Campos Obligatorios");

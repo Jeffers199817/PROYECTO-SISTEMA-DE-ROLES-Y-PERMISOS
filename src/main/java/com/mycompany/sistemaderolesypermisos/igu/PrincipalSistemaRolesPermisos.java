@@ -202,7 +202,7 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
                             pAdmin.setLocationRelativeTo(null);
                             
                             this.dispose();
-                                 
+                                 System.out.println(" Hola prueba número 2 ");
                             
                         }
                         

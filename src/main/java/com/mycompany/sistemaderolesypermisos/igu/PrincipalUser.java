@@ -208,6 +208,8 @@ public class PrincipalUser extends javax.swing.JFrame {
         String titulos[] = {"Id","Usuario","Rol","Descripción"};
         modeloTabla.setColumnIdentifiers(titulos);
         
+        System.out.println("Hola bienvenido prueba 1 ");
+        
        
         //2.1 Listar todos los usuarios de la bd la lista de usuarios
         

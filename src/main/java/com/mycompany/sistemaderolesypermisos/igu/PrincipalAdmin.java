@@ -201,6 +201,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
                  
                  
                  this.cargarTabla1();
+                 System.out.println(" Prueba número 4 finla de la prueba");
     }//GEN-LAST:event_formWindowOpened
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
