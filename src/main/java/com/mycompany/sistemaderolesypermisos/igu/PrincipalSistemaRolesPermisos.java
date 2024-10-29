@@ -193,7 +193,7 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
               if(!nombreUsuario.equals("") && !contrasenia.equals("")){
                 Usuario usr = controlL.validarUsuario(nombreUsuario, contrasenia);
                     if(usr != null && usr != EMAIL_CONTRASENIA_INCORRECTA){ 
-                        
+                         System.out.println(" Prueba número 4 finla de la prueba");
                         String rol = usr.getUnRol().getRol();
                         if(rol.equals("admin")){
                             
@@ -249,7 +249,7 @@ public class PrincipalSistemaRolesPermisos extends javax.swing.JFrame {
                txtNombreUsuario.setText("");
                txtContrasenia.setText("");
 
-
+ System.out.println(" Prueba número 4 finla de la prueba");
 
 
         // TODO add your handling code here:
